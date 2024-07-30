@@ -8,6 +8,6 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.route("/actions.json").options(actionsJson.OPTIONS).get(actionsJson.GET);
-router.route("/api/actions/buy-blinks").options(buyBlinks.OPTIONS).get(buyBlinks.GET);
+router.route("/api/actions/buy-blinks").options(buyBlinks.OPTIONS).get(buyBlinks.GET).post(buyBlinks.POST);
 
 export default router;
