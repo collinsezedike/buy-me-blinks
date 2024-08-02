@@ -17,37 +17,42 @@ import {
 	TransactionInstruction,
 } from "@solana/web3.js";
 
+const DEFAULT_NOTE = "Thank you for all you do and more!";
 const TO_PUBKEY = new PublicKey("tapBQPn3C3tetbjg1pHEBeXuU37rECQiTfrALGpxNhH");
 
 const POST = async (req: Request, res: Response) => {
 	try {
 		const request: ActionPostRequest = req.body;
-		if (!request?.account?.trim()) {
-			return res
-				.set(ACTIONS_CORS_HEADERS)
-				.status(400)
-				.json("Account is required");
-		}
 
+		if (!request?.account?.trim()) {
+			throw new Error("`account` field is required");
+		}
 		let account: PublicKey;
 		try {
 			account = new PublicKey(request.account);
 		} catch (err: any) {
-			return res
-				.set(ACTIONS_CORS_HEADERS)
-				.status(400)
-				.json("Invalid account");
+			throw new Error("invalid account provided: not a valid public key");
+		}
+
+		let { amount, note }: any = req.query;
+		if (!note?.toString().trim()) note = DEFAULT_NOTE;
+		if (!amount?.toString().trim()) {
+			throw new Error("`amount` parameter is required");
+		}
+		amount = parseFloat(amount);
+		if (Number.isNaN(amount)) {
+			throw new Error("Invalid `amount` parameter");
 		}
 
 		const transaction = new Transaction();
+		transaction.feePayer = account;
 		transaction.add(
 			SystemProgram.transfer({
 				fromPubkey: account,
-				lamports: 0.1 * LAMPORTS_PER_SOL,
+				lamports: amount * LAMPORTS_PER_SOL,
 				toPubkey: TO_PUBKEY,
 			})
 		);
-		transaction.feePayer = account;
 		const connection = new Connection(clusterApiUrl("devnet"));
 		transaction.recentBlockhash = (
 			await connection.getLatestBlockhash()
@@ -61,10 +66,7 @@ const POST = async (req: Request, res: Response) => {
 		});
 		return res.set(ACTIONS_CORS_HEADERS).status(200).json(payload);
 	} catch (err: any) {
-		return res
-			.set(ACTIONS_CORS_HEADERS)
-			.status(400)
-			.json("Something went wrong");
+		return res.set(ACTIONS_CORS_HEADERS).status(400).json(err.message);
 	}
 };
 
