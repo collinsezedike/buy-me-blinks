@@ -1,0 +1,26 @@
+.intro_container{
+    margin: 90px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.intro_h1{
+    font-size: 40px;
+    text-align: center;
+    width: 480px;
+}
+.intro_p{
+    font-size: 14px;
+    margin: 10px 0 13px;
+}
+.intro_btn{
+    color:white;
+    font-weight: 700;
+    padding: 8px 16px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 50px;
+    background-color: #001031;
+}
+.intro_btn:hover{
+    background-color: #ffb900;
+}
