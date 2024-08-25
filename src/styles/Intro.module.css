@@ -11,6 +11,7 @@
 }
 .intro_p{
     font-size: 14px;
+    text-align: center;
     margin: 10px 0 13px;
 }
 .intro_btn{
@@ -23,4 +24,18 @@
 }
 .intro_btn:hover{
     background-color: #ffb900;
+}
+
+@media (max-width: 600px) {
+    .intro_container{
+        margin: 50px 0;
+    }
+    .intro_h1{
+        font-size: 30px;
+        width: 90%;
+    }
+    .intro_p{
+        font-size: 14px;
+        margin: 7px 0 10px;
+    }
 }

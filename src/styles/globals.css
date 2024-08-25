@@ -20,3 +20,9 @@ nav{
   align-items: center;
   padding: 20px 40px;
 }
+
+@media (max-width: 600px) {
+  nav{
+    padding: 10px 15px;
+  }
+}

@@ -3,3 +3,9 @@
     align-items: center;
     gap: 30px;
 }
+
+@media (max-width: 600px) {
+    .nav_discord_icon{
+        gap: 15px;
+    }
+}
