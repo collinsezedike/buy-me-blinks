@@ -8,7 +8,7 @@ function Intro(){
           Web3 creators deserve more than just likes
         </h1>
         <p className={styles.intro_p}>
-          We're making it easy for fans to show real appreciation
+          We are making it easy for fans to show real appreciation
         </p>
         <button className={styles.intro_btn} >Get Started</button>
     </section>
