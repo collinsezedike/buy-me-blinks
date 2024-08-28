@@ -9,7 +9,8 @@ function MintPage() {
   console.log(publicKey , wallet , useWallet())
 
   const initializeTransaction = async ()=>{
-      try {
+    try {
+      publicKey?.toBase58()
       const response = await fetch(`/api/mint?username=${encodeURIComponent(username)}`, {
         method: 'POST',
         headers: {
@@ -17,7 +18,7 @@ function MintPage() {
         },
         body: JSON.stringify({
           username: username,
-          account: publicKey?.toBase58()
+          account: publicKey
         }),
       });
 
@@ -31,7 +32,7 @@ function MintPage() {
     } catch (error: any) {
       setMessage(`Error: ${error.message}`);
     }
-  };
+  }
 
   return (
     <div>
