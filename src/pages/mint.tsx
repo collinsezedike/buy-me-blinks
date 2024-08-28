@@ -5,12 +5,11 @@ function MintPage() {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   
-  const { publicKey, wallet} = useWallet();
-  console.log(publicKey , wallet , useWallet())
+  const { publicKey } = useWallet()
+  const publicKeyString = publicKey?.toBase58()
 
   const initializeTransaction = async ()=>{
     try {
-      const publicKeyString = publicKey?.toBase58()
       const response = await fetch(`/api/mint?username=${encodeURIComponent(username)}`, {
         method: 'POST',
         headers: {
