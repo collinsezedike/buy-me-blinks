@@ -5,7 +5,8 @@ function MintPage() {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   
-  const { publicKey } = useWallet();
+  const { publicKey, wallet} = useWallet();
+  console.log(publicKey , wallet , useWallet())
 
   const initializeTransaction = async ()=>{
       try {
