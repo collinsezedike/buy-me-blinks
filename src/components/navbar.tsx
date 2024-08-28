@@ -1,10 +1,16 @@
 import { FaTwitter } from "react-icons/fa6"
 import styles from '@/styles/Navbar.module.css'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from "@solana/wallet-adapter-react"
+
 function NavBar(){
+
+    
+  const walletInfo = useWallet()
   return (
     <nav>
       <h3>BuyMeBlinks</h3>
+      <p onClick={()=>console.log(walletInfo)}>click me</p>
       <div className={styles.nav_discord_icon}>
         <a href='https://x.com/buymeblinks' target='_blank' rel='noopener noreferrer'>
           <FaTwitter size={25} color={'#001031'} />
