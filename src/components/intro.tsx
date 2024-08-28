@@ -1,4 +1,5 @@
 import styles from '@/styles/Intro.module.css'
+import Link from 'next/link'
 
 function Intro(){
 
@@ -10,7 +11,9 @@ function Intro(){
         <p className={styles.intro_p}>
           We are making it easy for fans to show real appreciation
         </p>
-        <a href="/mint"><button className={styles.intro_btn} >Get Started</button></a>
+        <Link href={'/mint'}>
+        <button className={styles.intro_btn} >Get Started</button>
+        </Link>
     </section>
   )
 }
