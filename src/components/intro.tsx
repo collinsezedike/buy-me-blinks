@@ -10,7 +10,7 @@ function Intro(){
         <p className={styles.intro_p}>
           We are making it easy for fans to show real appreciation
         </p>
-        <button className={styles.intro_btn} >Get Started</button>
+        <a href="/mint"><button className={styles.intro_btn} >Get Started</button></a>
     </section>
   )
 }

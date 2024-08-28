@@ -3,13 +3,13 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 function MintPage() {
   const [username, setUsername] = useState('');
-  const [account, setAccount] = useState('');
   const [message, setMessage] = useState('');
+  
+  const wallet = useWallet();
+  console.log('wallet is ', { wallet : wallet.wallet });
 
-  const initializeTransaction = async () => {
-    const wallet = useWallet();
+  const initializeTransaction = async ()=>{
       try {
-        console.log({wallet});
       const response = await fetch(`/api/mint?username=${encodeURIComponent(username)}`, {
         method: 'POST',
         headers: {
@@ -41,12 +41,6 @@ function MintPage() {
         placeholder="Enter username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Enter your public key"
-        value={account}
-        onChange={(e) => setAccount(e.target.value)}
       />
       <button onClick={initializeTransaction}>Mint</button>
       <p>{message}</p>
