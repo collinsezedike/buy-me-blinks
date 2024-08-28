@@ -10,7 +10,7 @@ function MintPage() {
 
   const initializeTransaction = async ()=>{
     try {
-      publicKey?.toBase58()
+      const publicKeyString = publicKey?.toBase58()
       const response = await fetch(`/api/mint?username=${encodeURIComponent(username)}`, {
         method: 'POST',
         headers: {
@@ -18,7 +18,7 @@ function MintPage() {
         },
         body: JSON.stringify({
           username: username,
-          account: publicKey
+          account: publicKeyString
         }),
       });
 
