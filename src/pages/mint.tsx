@@ -5,8 +5,7 @@ function MintPage() {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   
-  const wallet = useWallet();
-  console.log('wallet is ', { wallet : wallet.wallet });
+  const { publicKey } = useWallet();
 
   const initializeTransaction = async ()=>{
       try {
@@ -17,7 +16,7 @@ function MintPage() {
         },
         body: JSON.stringify({
           username: username,
-          account: wallet
+          account: publicKey?.toBase58()
         }),
       });
 
@@ -36,6 +35,7 @@ function MintPage() {
   return (
     <div>
       <h1>Mint Your Username</h1>
+      <p>user wallet address is {publicKey?.toBase58()}</p>
       <input
         type="text"
         placeholder="Enter username"
