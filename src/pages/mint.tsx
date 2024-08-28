@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useWallet } from "@solana/wallet-adapter-react";
+import NavBar from '@/components/navbar';
 
 function MintPage() {
   const [username, setUsername] = useState('');
@@ -35,6 +36,7 @@ function MintPage() {
 
   return (
     <div>
+      <NavBar />
       <h1>Mint Your Username</h1>
       <p>user wallet address is {publicKey?.toBase58()}</p>
       <input
@@ -44,8 +46,6 @@ function MintPage() {
         onChange={(e) => setUsername(e.target.value)}
       />
       <button onClick={initializeTransaction}>Mint</button>
-      <p>{message}</p>
-      <p>This:: {JSON.stringify(useWallet())}</p>
     </div>
   );
 }
