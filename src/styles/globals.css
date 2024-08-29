@@ -15,23 +15,45 @@ body{
 }
 button{
   color:white;
+  font-size: 30px !important;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 20px 30px;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 50px;
   background-color: #001031;
-  letter-spacing: 1px;
+  letter-spacing: 3px;
+  transition: all .75s ease;
+  cursor: pointer;
+  height: auto !important;
 }
-
+button:hover{
+  background-color: #ffb900 !important;
+  border: none;
+  color: #001031;
+}
 nav{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 20px 40px 0;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 430px) {
   nav{
-    padding: 10px 15px;
+    padding: 5px 10px;
+  }
+  button{
+    line-height: 10px !important;
+    font-size: 12px !important;
+    font-weight: 700;
+    padding: 10px 10px !important;
+    letter-spacing: 1px;
+  }
+  .wallet-adapter-button-start-icon img {
+    width: 14px;
+    height: 14px;
+  }
+  .wallet-adapter-button-start-icon {
+    margin-right: 2px;
   }
 }

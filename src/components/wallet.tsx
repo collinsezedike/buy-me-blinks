@@ -1,6 +1,5 @@
 import NavBar from './navbar'
 import Intro from './intro'
-import Collections from './collections'
 
 function Wallet(){  
  
@@ -8,7 +7,6 @@ function Wallet(){
         <>
             <NavBar />
             <Intro />
-            <Collections />
         </>
 
     )

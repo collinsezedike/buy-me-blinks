@@ -60,7 +60,7 @@ function MintPage() {
             }
           }
           />
-          <button onClick={initializeTransaction}>Mint</button>
+          <button onClick={initializeTransaction} className={styles.mint_btn}>Start Minting</button>
           <h1 style={{textTransform:'capitalize'}}>{message}</h1>
         </div>
       </div>

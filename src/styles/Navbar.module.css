@@ -1,11 +1,18 @@
-.nav_discord_icon{
+.nav_link{
     display: flex;
     align-items: center;
     gap: 30px;
 }
+.discord_icon{
+    font-size:40px; 
+    color: #001031;
+}
 
-@media (max-width: 600px) {
-    .nav_discord_icon{
-        gap: 15px;
+@media (max-width: 430px) {
+    .nav_link{
+        gap: 8px;
+    }
+    .discord_icon{
+        font-size:20px;
     }
 }
