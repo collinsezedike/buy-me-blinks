@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { useWallet } from "@solana/wallet-adapter-react";
-import NavBar from '@/components/navbar';
+import React, { useState } from 'react'
+import { useWallet } from "@solana/wallet-adapter-react"
+import NavBar from '@/components/navbar'
+import Header from '@/components/header'
+import styles from '@/styles/mint.module.css'
 
 function MintPage() {
-  const [username, setUsername] = useState('');
-  const [message, setMessage] = useState('');
+  const [username, setUsername] = useState('')
+  const [message, setMessage] = useState('')
   
   const { publicKey } = useWallet()
   const publicKeyString = publicKey?.toBase58()
@@ -41,22 +43,27 @@ function MintPage() {
 
   return (
     <div>
+      <Header />
       <NavBar />
-      <h1>Mint Your Username</h1>
-      <input
-        type="text"
-        placeholder="Enter username"
-        value={username}
-        onChange={(e) =>{
-          setUsername(e.target.value)
-          setMessage('')
-        }
-      }
-        />
-      <button onClick={initializeTransaction}>Mint</button>
-      <h1>{message}</h1>
-        <p>username : {username}</p>
-        <p>user wallet address : {publicKeyString}</p>
+      <div className={styles.mint_container}>
+        <img src="/mint-img.png" alt="" />
+        <div>
+          <h1>Hi, what shall we call you?</h1>
+          <input
+            type="text"
+            placeholder="Enter username"
+            className={styles.username_input}
+            value={username}
+            onChange={(e) =>{
+              setUsername(e.target.value)
+              setMessage('')
+            }
+          }
+          />
+          <button onClick={initializeTransaction} className={styles.mint_btn}>Start Minting</button>
+          <h1 style={{textTransform:'capitalize'}}>{message}</h1>
+        </div>
+      </div>
     </div>
   );
 }

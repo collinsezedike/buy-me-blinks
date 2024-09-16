@@ -1,0 +1,46 @@
+.mint_container{
+    display: flex;
+    height: 80vh;
+    align-items: flex-end;
+}
+.mint_container img{
+    width: 48vw;
+    margin-right: 30px;
+}
+.mint_container>div{
+    margin-bottom: 50px;
+}
+.username_input{
+    background-color: transparent;
+    font-size: 18px;
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 0 5px 3px;
+    margin: 20px 10px 30px;
+    width: 45vw;
+    display: block;
+    transition: all 0.5s ease;
+}
+.username_input:focus{
+    outline: none;
+    font-size: 25px;
+    padding:10px 13px;
+}
+
+@media (max-width: 430px) {
+    .mint_container{
+        flex-direction: column;
+    }
+    .username_input{
+        width: 90vw;
+        margin: 15px 10px 10px;
+    }
+    .mint_container>div{
+        padding: 0 5px;
+        margin-top: 30px;
+    }
+    .mint_container img{
+        margin-right: 0;
+        width: 100%;
+    }
+}
