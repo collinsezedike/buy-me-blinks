@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { clusterApiUrl, Connection, Transaction } from "@solana/web3.js";
 
 import { addNewUsernameWallet } from "../../../utils";
@@ -7,12 +7,11 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	if (req.method !== "POST") {
+		return res.status(405).json({ message: "Method not allowed" });
+	}
 	try {
-		if (req.method !== "POST") {
-			return res.status(405).json({ message: "Method not allowed" });
-		}
-
-		const username = req.query.username as string;
+		const username: any = req.query.username;
 		const { signedTransaction } = req.body;
 
 		if (!signedTransaction?.trim() || !username?.trim()) {

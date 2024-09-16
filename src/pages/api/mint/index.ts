@@ -29,7 +29,7 @@ export default async function handler(
 			throw new Error("Invalid username: username is already taken");
 		}
 
-		let { account } = req.body;
+		let account: PublicKey;
 		try {
 			account = new PublicKey(req.body.account);
 		} catch (err: any) {

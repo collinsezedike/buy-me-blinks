@@ -28,7 +28,7 @@ function MintPage() {
       });
 
       const data = await response.json();
-
+      
       if (response.ok) {
         setMessage(`Transaction initialized! Follow this link: ${data.link}`);
       } else {
