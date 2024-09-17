@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 		title: "Buy Me Blinks",
 		icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
 		description:
-			"Mint a unique username for receiving appreciation via BuyMeBlinks.\n\nEnsure you are on devnet as some SOL will be airdropped to your wallet for gas fee",
+			"Mint a unique username for receiving appreciation via BuyMeBlinks.\n\n**ensure your wallet is on devnet mode and you have some SOL for gas fee",
 		label: "Mint Blink",
 		links: {
 			actions: [
