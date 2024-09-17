@@ -74,7 +74,7 @@ export const POST = async (
 			title: "Blink mint was successful!",
 			icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
 			label: "Complete!",
-			description: `Here is your unique blink url: ${url.origin}/${URL_PATH}/appreciate/${username}`,
+			description: `Here is your unique blink url: ${url.origin}${URL_PATH}/appreciate?creator=${username}`,
 		};
 
 		return NextResponse.json(payload, {
