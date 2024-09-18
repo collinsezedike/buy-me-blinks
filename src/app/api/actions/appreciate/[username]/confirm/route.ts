@@ -7,7 +7,6 @@ import {
 	ACTIONS_CORS_HEADERS,
 } from "@solana/actions";
 
-const URL_PATH = "/api/actions";
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
 
 export const GET = async (req: NextRequest) => {
@@ -29,14 +28,6 @@ export const POST = async (
 ) => {
 	try {
 		const body: NextActionPostRequest = await req.json();
-
-		// Unncessary check
-		// let account: PublicKey;
-		// try {
-		// 	account = new PublicKey(body.account);
-		// } catch (err) {
-		// 	throw new Error("Invalid account provided: not a valid public key");
-		// }
 
 		let signature: string;
 		try {
@@ -64,17 +55,15 @@ export const POST = async (
 			throw err;
 		}
 
-		// console.log(await connection.getParsedTransaction(signature));
 
-		const url = new URL(req.url);
 		const username = context.params.username;
 
 		const payload: CompletedAction = {
 			type: "completed",
-			title: "Blink mint was successful!",
+			title: "Thank you!",
 			icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
 			label: "Complete!",
-			description: `Here is your unique blink url: ${url.origin}${URL_PATH}/appreciate/${username}`,
+			description: `@${username} appreciates you in turn for your kindness`,
 		};
 
 		return NextResponse.json(payload, {
