@@ -1,25 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import {
-	NextActionPostRequest,
 	ActionError,
 	CompletedAction,
-	ACTIONS_CORS_HEADERS,
+	createActionHeaders,
+	NextActionPostRequest,
 } from "@solana/actions";
 
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
+const HEADERS = createActionHeaders();
 
 export const GET = async (req: NextRequest) => {
 	return NextResponse.json(
 		{ message: "Method not supported" } as ActionError,
-		{ status: 403, headers: ACTIONS_CORS_HEADERS }
+		{ status: 403, headers: HEADERS }
 	);
 };
 
 export const OPTIONS = async () => {
-	return NextResponse.json(null, {
-		headers: ACTIONS_CORS_HEADERS,
-	});
+	return NextResponse.json(null, { status: 200, headers: HEADERS });
 };
 
 export const POST = async (
@@ -55,7 +54,6 @@ export const POST = async (
 			throw err;
 		}
 
-
 		const username = context.params.username;
 
 		const payload: CompletedAction = {
@@ -66,14 +64,11 @@ export const POST = async (
 			description: `@${username} appreciates you in turn for your kindness`,
 		};
 
-		return NextResponse.json(payload, {
-			status: 201,
-			headers: ACTIONS_CORS_HEADERS,
-		});
+		return NextResponse.json(payload, { status: 201, headers: HEADERS });
 	} catch (err: any) {
 		return NextResponse.json({ message: err.message } as ActionError, {
 			status: 400,
-			headers: ACTIONS_CORS_HEADERS,
+			headers: HEADERS,
 		});
 	}
 };

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+	ActionError,
 	ActionGetResponse,
 	ActionPostRequest,
 	ActionPostResponse,
-	ACTIONS_CORS_HEADERS,
+	createActionHeaders,
 	createPostResponse,
 	MEMO_PROGRAM_ID,
-	ActionError,
 } from "@solana/actions";
 import {
 	clusterApiUrl,
@@ -14,17 +14,18 @@ import {
 	LAMPORTS_PER_SOL,
 	PublicKey,
 	SystemProgram,
-	VersionedTransaction,
-	TransactionMessage,
 	TransactionInstruction,
+	TransactionMessage,
+	VersionedTransaction,
 } from "@solana/web3.js";
 
-import { getUsernameWallet } from "@/utils";
+import { getUsernameWallet } from "@/helpers";
 
 const CURRENCY = "SOL";
 const URL_PATH = "/api/actions";
 const DEFAULT_NOTE = "Thank you for all you do and more!";
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
+const HEADERS = createActionHeaders();
 
 export async function GET(
 	req: NextRequest,
@@ -55,10 +56,7 @@ export async function GET(
 		},
 	};
 
-	return NextResponse.json(payload, {
-		status: 200,
-		headers: ACTIONS_CORS_HEADERS,
-	});
+	return NextResponse.json(payload, { status: 200, headers: HEADERS });
 }
 
 export async function POST(
@@ -132,14 +130,11 @@ export async function POST(
 			},
 		});
 
-		return NextResponse.json(payload, {
-			status: 200,
-			headers: ACTIONS_CORS_HEADERS,
-		});
+		return NextResponse.json(payload, { status: 200, headers: HEADERS });
 	} catch (err: any) {
 		return NextResponse.json({ message: err.message } as ActionError, {
 			status: 400,
-			headers: ACTIONS_CORS_HEADERS,
+			headers: HEADERS,
 		});
 	}
 }

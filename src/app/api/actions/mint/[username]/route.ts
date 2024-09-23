@@ -1,28 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import {
-	NextActionPostRequest,
 	ActionError,
 	CompletedAction,
-	ACTIONS_CORS_HEADERS,
+	createActionHeaders,
+	NextActionPostRequest,
 } from "@solana/actions";
 
-import { setUsernameWallet } from "@/utils";
+import { setUsernameWallet } from "@/helpers";
 
 const URL_PATH = "/api/actions";
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
+const HEADERS = createActionHeaders();
 
 export const GET = async (req: NextRequest) => {
 	return NextResponse.json(
 		{ message: "Method not supported" } as ActionError,
-		{ status: 403, headers: ACTIONS_CORS_HEADERS }
+		{ status: 403, headers: HEADERS }
 	);
 };
 
 export const OPTIONS = async () => {
-	return NextResponse.json(null, {
-		headers: ACTIONS_CORS_HEADERS,
-	});
+	return NextResponse.json(null, { headers: HEADERS });
 };
 
 export const POST = async (
@@ -75,17 +74,15 @@ export const POST = async (
 			title: "Blink mint was successful!",
 			icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
 			label: "Complete!",
-			description: `Here is your unique blink url: ${url.origin}${URL_PATH}/appreciate/${username}`,
+			description: `Here is your unique blink url:\n${url.origin}${URL_PATH}/appreciate/${username}`,
 		};
 
-		return NextResponse.json(payload, {
-			status: 201,
-			headers: ACTIONS_CORS_HEADERS,
-		});
+		return NextResponse.json(payload, { status: 201, headers: HEADERS });
 	} catch (err: any) {
+		console.log({ err });
 		return NextResponse.json({ message: err.message } as ActionError, {
 			status: 400,
-			headers: ACTIONS_CORS_HEADERS,
+			headers: HEADERS,
 		});
 	}
 };

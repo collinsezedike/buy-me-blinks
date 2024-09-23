@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ACTIONS_CORS_HEADERS, ActionsJson } from "@solana/actions";
+import { ActionsJson, createActionHeaders } from "@solana/actions";
+
+const HEADERS = createActionHeaders();
 
 export async function GET(req: NextRequest) {
 	const payload: ActionsJson = {
 		rules: [
 			// map all root level routes to an action
 			{
-				pathPattern: "/*",
-				apiPath: "/api/actions/*",
+				pathPattern: "/mint/*",
+				apiPath: "/api/actions/mint/*",
+			},
+			{
+				pathPattern: "/appreciate/**",
+				apiPath: "/api/actions/appreciate/**",
 			},
 			// idempotent rule as the fallback
 			{
@@ -16,10 +22,7 @@ export async function GET(req: NextRequest) {
 			},
 		],
 	};
-	return NextResponse.json(
-		{ payload },
-		{ status: 200, headers: ACTIONS_CORS_HEADERS }
-	);
+	return NextResponse.json(payload, { status: 200, headers: HEADERS });
 }
 
 export const OPTIONS = GET;

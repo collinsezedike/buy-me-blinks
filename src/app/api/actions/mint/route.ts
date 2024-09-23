@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+	ActionError,
 	ActionGetResponse,
 	ActionPostRequest,
 	ActionPostResponse,
-	ACTIONS_CORS_HEADERS,
+	createActionHeaders,
 	createPostResponse,
 } from "@solana/actions";
 import {
@@ -12,21 +13,21 @@ import {
 	LAMPORTS_PER_SOL,
 	PublicKey,
 	SystemProgram,
-	VersionedTransaction,
 	TransactionMessage,
+	VersionedTransaction,
 } from "@solana/web3.js";
 
 // import { PROGRAM_ACCOUNT, getUsernameWallet } from "../../../utils";
 const URL_PATH = "/api/actions";
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
 const TO_PUBKEY = new PublicKey(process.env.PROGRAM_ACCOUNT!);
+const HEADERS = createActionHeaders();
 
 export async function GET(req: NextRequest) {
 	const payload: ActionGetResponse = {
 		title: "Buy Me Blinks",
 		icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
-		description:
-			"Mint a unique username for receiving appreciation via BuyMeBlinks.\n\n**ensure your wallet is on devnet mode and you have some SOL for gas fee",
+		description: `Mint a unique username for receiving appreciation via BuyMeBlinks.\n\n**ensure your wallet is on devnet mode and you have some SOL for gas fee`,
 		label: "Mint Blink",
 		links: {
 			actions: [
@@ -45,10 +46,7 @@ export async function GET(req: NextRequest) {
 		},
 	};
 
-	return NextResponse.json(payload, {
-		status: 200,
-		headers: ACTIONS_CORS_HEADERS,
-	});
+	return NextResponse.json(payload, { status: 200, headers: HEADERS });
 }
 
 export async function POST(req: NextRequest) {
@@ -99,15 +97,12 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		return NextResponse.json(payload, {
-			status: 200,
-			headers: ACTIONS_CORS_HEADERS,
-		});
+		return NextResponse.json(payload, { status: 200, headers: HEADERS });
 	} catch (err: any) {
-		return NextResponse.json(
-			{ success: false, message: err.message },
-			{ status: 400 }
-		);
+		return NextResponse.json({ message: err.message } as ActionError, {
+			status: 400,
+			headers: HEADERS,
+		});
 	}
 }
 
