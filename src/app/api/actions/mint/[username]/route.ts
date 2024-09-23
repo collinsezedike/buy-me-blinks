@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import {
 	NextActionPostRequest,
 	ActionError,
 	CompletedAction,
 	ACTIONS_CORS_HEADERS,
 } from "@solana/actions";
+
+import { setUsernameWallet } from "@/utils";
 
 const URL_PATH = "/api/actions";
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
@@ -30,13 +32,12 @@ export const POST = async (
 	try {
 		const body: NextActionPostRequest = await req.json();
 
-		// Unncessary check
-		// let account: PublicKey;
-		// try {
-		// 	account = new PublicKey(body.account);
-		// } catch (err) {
-		// 	throw new Error("Invalid account provided: not a valid public key");
-		// }
+		let account: PublicKey;
+		try {
+			account = new PublicKey(body.account);
+		} catch (err) {
+			throw new Error("Invalid account provided: not a valid public key");
+		}
 
 		let signature: string;
 		try {
@@ -64,10 +65,10 @@ export const POST = async (
 			throw err;
 		}
 
-		// console.log(await connection.getParsedTransaction(signature));
-
 		const url = new URL(req.url);
 		const username = context.params.username;
+
+		setUsernameWallet(username, account.toString());
 
 		const payload: CompletedAction = {
 			type: "completed",

@@ -19,12 +19,11 @@ import {
 	TransactionInstruction,
 } from "@solana/web3.js";
 
-// import { PROGRAM_ACCOUNT, getUsernameWallet } from "../../../utils";
+import { getUsernameWallet } from "@/utils";
 
 const CURRENCY = "SOL";
 const URL_PATH = "/api/actions";
 const DEFAULT_NOTE = "Thank you for all you do and more!";
-const TO_PUBKEY = new PublicKey(process.env.PROGRAM_ACCOUNT!);
 const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
 
 export async function GET(
@@ -99,10 +98,11 @@ export async function POST(
 
 		// Airdrop some sol for gas fee
 		// await connection.requestAirdrop(payer, LAMPORTS_PER_SOL);
+		const to_pubkey = new PublicKey(getUsernameWallet(username));
 
 		const initializeSOLtransfer = SystemProgram.transfer({
 			fromPubkey: payer,
-			toPubkey: TO_PUBKEY,
+			toPubkey: to_pubkey,
 			lamports: amountNum * LAMPORTS_PER_SOL,
 		});
 
