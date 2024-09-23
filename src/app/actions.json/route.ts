@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ActionsJson, createActionHeaders } from "@solana/actions";
+import { ActionsJson } from "@solana/actions";
 
-const HEADERS = createActionHeaders();
+import { HEADERS } from "@/helpers";
 
 export async function GET(req: NextRequest) {
 	const payload: ActionsJson = {
 		rules: [
 			// map all root level routes to an action
 			{
-				pathPattern: "/mint/*",
-				apiPath: "/api/actions/mint/*",
+				pathPattern: "/mint/**",
+				apiPath: "/api/actions/mint/**",
 			},
 			{
 				pathPattern: "/appreciate/**",

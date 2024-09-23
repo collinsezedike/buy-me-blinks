@@ -1,17 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import {
 	ActionError,
 	CompletedAction,
-	createActionHeaders,
 	NextActionPostRequest,
 } from "@solana/actions";
 
-import { setUsernameWallet } from "@/helpers";
-
-const URL_PATH = "/api/actions";
-const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
-const HEADERS = createActionHeaders();
+import { CLUSTER_URL, HEADERS, URL_PATH, setUsernameWallet } from "@/helpers";
 
 export const GET = async (req: NextRequest) => {
 	return NextResponse.json(
@@ -21,7 +16,7 @@ export const GET = async (req: NextRequest) => {
 };
 
 export const OPTIONS = async () => {
-	return NextResponse.json(null, { headers: HEADERS });
+	return NextResponse.json(null, { status: 200, headers: HEADERS });
 };
 
 export const POST = async (
@@ -38,13 +33,8 @@ export const POST = async (
 			throw new Error("Invalid account provided: not a valid public key");
 		}
 
-		let signature: string;
-		try {
-			signature = body.signature;
-			if (!signature) throw new Error("No signature provided");
-		} catch (err) {
-			throw new Error("Invalid signature provided");
-		}
+		const signature: string = body.signature;
+		if (!signature.trim()) throw new Error("invalid signature provided");
 
 		const connection = new Connection(CLUSTER_URL);
 

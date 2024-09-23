@@ -4,11 +4,9 @@ import {
 	ActionGetResponse,
 	ActionPostRequest,
 	ActionPostResponse,
-	createActionHeaders,
 	createPostResponse,
 } from "@solana/actions";
 import {
-	clusterApiUrl,
 	Connection,
 	LAMPORTS_PER_SOL,
 	PublicKey,
@@ -17,11 +15,9 @@ import {
 	VersionedTransaction,
 } from "@solana/web3.js";
 
-// import { PROGRAM_ACCOUNT, getUsernameWallet } from "../../../utils";
-const URL_PATH = "/api/actions";
-const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
+import { CLUSTER_URL, HEADERS, URL_PATH } from "@/helpers";
+
 const TO_PUBKEY = new PublicKey(process.env.PROGRAM_ACCOUNT!);
-const HEADERS = createActionHeaders();
 
 export async function GET(req: NextRequest) {
 	const payload: ActionGetResponse = {

@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
+import { Connection } from "@solana/web3.js";
 import {
 	ActionError,
 	CompletedAction,
-	createActionHeaders,
 	NextActionPostRequest,
 } from "@solana/actions";
 
-const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
-const HEADERS = createActionHeaders();
+import { CLUSTER_URL, HEADERS } from "@/helpers";
 
 export const GET = async (req: NextRequest) => {
 	return NextResponse.json(
@@ -28,13 +26,8 @@ export const POST = async (
 	try {
 		const body: NextActionPostRequest = await req.json();
 
-		let signature: string;
-		try {
-			signature = body.signature;
-			if (!signature) throw new Error("No signature provided");
-		} catch (err) {
-			throw new Error("Invalid signature provided");
-		}
+		const signature: string = body.signature;
+		if (!signature.trim()) throw new Error("invalid signature provided");
 
 		const connection = new Connection(CLUSTER_URL);
 
