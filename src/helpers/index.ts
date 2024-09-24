@@ -1,9 +1,6 @@
-import fs from "fs";
-import path from "path";
 import { createActionHeaders } from "@solana/actions";
 import { clusterApiUrl } from "@solana/web3.js";
-
-const FILEPATH = path.join(process.cwd(), "data.yml");
+import { createClient } from "redis";
 
 // CONSTANTS
 export const URL_PATH = "/api/actions";
@@ -11,24 +8,43 @@ export const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
 export const HEADERS = createActionHeaders({ chainId: "devnet" });
 
 // FUNCTIONS
-export const getUsernameWallet = (username: string): string => {
+export const getUsernameWallet = async (username: string) => {
 	try {
-		const data = fs.readFileSync(FILEPATH);
-		const dataObject = JSON.parse(data.toString().replace("/n", ""));
-		return dataObject[username]
-			? dataObject[username]
-			: (process.env.PROGRAM_ACCOUNT as string);
+		const client = createClient({
+			password: process.env.REDIS_PASSWORD,
+			socket: {
+				host: process.env.REDIS_HOST,
+				port: Number(process.env.REDIS_PORT),
+			},
+		});
+		client.on("error", (err: any) =>
+			console.log("Redis Client Error", err)
+		);
+		await client.connect();
+		let wallet = await client.get(username);
+		if (!wallet) wallet = process.env.PROGRAM_ACCOUNT!;
+		await client.disconnect();
+		return wallet;
 	} catch (err: any) {
 		throw err;
 	}
 };
 
-export const setUsernameWallet = (username: string, wallet: string) => {
+export const setUsernameWallet = async (username: string, wallet: string) => {
 	try {
-		const data = fs.readFileSync(FILEPATH);
-		const dataObject = JSON.parse(data.toString().replace("/n", ""));
-		dataObject[username] = wallet;
-		fs.writeFileSync(FILEPATH, JSON.stringify(dataObject, null, 4));
+		const client = createClient({
+			password: process.env.REDIS_PASSWORD,
+			socket: {
+				host: process.env.REDIS_HOST,
+				port: Number(process.env.REDIS_PORT),
+			},
+		});
+		client.on("error", (err: any) =>
+			console.log("Redis Client Error", err)
+		);
+		await client.connect();
+		await client.set(username, wallet);
+		await client.disconnect();
 	} catch (err: any) {
 		throw err;
 	}

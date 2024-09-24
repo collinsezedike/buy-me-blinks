@@ -91,7 +91,9 @@ export async function POST(
 
 		// Airdrop some sol for gas fee
 		// await connection.requestAirdrop(payer, LAMPORTS_PER_SOL);
-		const to_pubkey = new PublicKey(getUsernameWallet(username));
+
+		const wallet = await getUsernameWallet(username);
+		const to_pubkey = new PublicKey(wallet);
 
 		const initializeSOLtransfer = SystemProgram.transfer({
 			fromPubkey: payer,

@@ -57,7 +57,7 @@ export const POST = async (
 		const url = new URL(req.url);
 		const username = context.params.username;
 
-		setUsernameWallet(username, account.toString());
+		await setUsernameWallet(username, account.toString());
 
 		const payload: CompletedAction = {
 			type: "completed",
