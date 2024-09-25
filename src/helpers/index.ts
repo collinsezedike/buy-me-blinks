@@ -5,7 +5,10 @@ import { createClient } from "redis";
 // CONSTANTS
 export const URL_PATH = "/api/actions";
 export const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
-export const HEADERS = createActionHeaders({ chainId: "devnet" });
+export const HEADERS = createActionHeaders({
+	chainId: "devnet",
+	actionVersion: "2.2",
+});
 
 // FUNCTIONS
 export const getUsernameWallet = async (username: string) => {
