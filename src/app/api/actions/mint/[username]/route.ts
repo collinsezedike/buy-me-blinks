@@ -6,7 +6,7 @@ import {
 	NextActionPostRequest,
 } from "@solana/actions";
 
-import { CLUSTER_URL, HEADERS, URL_PATH, setUsernameWallet } from "@/helpers";
+import { CLUSTER_URL, HEADERS, setUsernameWallet } from "@/helpers";
 
 export const GET = async (req: NextRequest) => {
 	return NextResponse.json(
@@ -64,7 +64,7 @@ export const POST = async (
 			title: "Blink mint was successful!",
 			icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
 			label: "Complete!",
-			description: `Here is your unique blink url:\n${url.origin}${URL_PATH}/appreciate/${username}`,
+			description: `Here is your unique blink url:\n${url.origin}/appreciate/${username}`,
 		};
 
 		return NextResponse.json(payload, { status: 201, headers: HEADERS });
