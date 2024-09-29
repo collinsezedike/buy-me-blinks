@@ -31,7 +31,7 @@ export async function GET(
 	const payload: ActionGetResponse = {
 		title: "Buy Me Blinks",
 		icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
-		description: `Show appreciation to @${username}.\n\n**ensure your wallet is on devnet mode and you have some SOL for gas fee`,
+		description: `Show @${username} how much you appreciate their work.`,
 		label: "Send SOL",
 		links: {
 			actions: [

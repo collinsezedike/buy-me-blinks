@@ -3,10 +3,11 @@ import { clusterApiUrl } from "@solana/web3.js";
 import { createClient } from "redis";
 
 // CONSTANTS
+export const MINT_FEE = 0.05;
 export const URL_PATH = "/api/actions";
-export const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("devnet");
+export const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("mainnet-beta");
 export const HEADERS = createActionHeaders({
-	chainId: "devnet",
+	chainId: "mainnet",
 	actionVersion: "2.2",
 });
 

@@ -15,7 +15,7 @@ import {
 	VersionedTransaction,
 } from "@solana/web3.js";
 
-import { CLUSTER_URL, HEADERS, URL_PATH } from "@/helpers";
+import { CLUSTER_URL, HEADERS, MINT_FEE, URL_PATH } from "@/helpers";
 
 const TO_PUBKEY = new PublicKey(process.env.PROGRAM_ACCOUNT!);
 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 	const payload: ActionGetResponse = {
 		title: "Buy Me Blinks",
 		icon: `${new URL(req.url).origin}/buymeblinkslogo.jpg`,
-		description: `Mint a unique username for receiving appreciation via BuyMeBlinks.\n\n**ensure your wallet is on devnet mode and you have some SOL for gas fee`,
+		description: `Mint a unique username for receiving appreciation via BuyMeBlinks.\n\n**Fee is ${MINT_FEE} SOL`,
 		label: "Mint Blink",
 		links: {
 			actions: [
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 		const initializeSOLtransfer = SystemProgram.transfer({
 			fromPubkey: payer,
 			toPubkey: TO_PUBKEY,
-			lamports: 0.01 * LAMPORTS_PER_SOL,
+			lamports: MINT_FEE * LAMPORTS_PER_SOL,
 		});
 
 		const message = new TransactionMessage({
