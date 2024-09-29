@@ -8,6 +8,16 @@
 		"start": "next start",
 		"lint": "next lint"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/collinsezedike/buy-me-blinks.git"
+	},
+	"author": "Ezedike-egwom Collins",
+	"bugs": {
+		"url": "https://github.com/collinsezedike/buy-me-blinks/issues",
+		"email": "buymeblinks@gmail.com"
+	},
+	"homepage": "https://buymeblinks.vercel.app/mint",
 	"dependencies": {
 		"@solana/actions": "^1.6.4",
 		"@solana/web3.js": "^1.95.3",
