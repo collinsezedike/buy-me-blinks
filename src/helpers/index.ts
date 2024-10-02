@@ -4,6 +4,7 @@ import { createClient } from "redis";
 
 // CONSTANTS
 export const MINT_FEE = 0.05;
+export const PROCESSING_FEE = 0.0005;
 export const URL_PATH = "/api/actions";
 export const CLUSTER_URL = process.env.RPC_URL ?? clusterApiUrl("mainnet-beta");
 export const HEADERS = createActionHeaders({

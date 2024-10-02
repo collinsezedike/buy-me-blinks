@@ -17,7 +17,13 @@ import {
 	VersionedTransaction,
 } from "@solana/web3.js";
 
-import { CLUSTER_URL, HEADERS, URL_PATH, getUsernameWallet } from "@/helpers";
+import {
+	CLUSTER_URL,
+	HEADERS,
+	PROCESSING_FEE,
+	URL_PATH,
+	getUsernameWallet,
+} from "@/helpers";
 
 const CURRENCY = "SOL";
 const DEFAULT_NOTE = "Thank you for all you do and more!";
@@ -95,13 +101,19 @@ export async function POST(
 		const wallet = await getUsernameWallet(username);
 		const to_pubkey = new PublicKey(wallet);
 
-		const initializeSOLtransfer = SystemProgram.transfer({
+		const processingPayment = SystemProgram.transfer({
+			fromPubkey: payer,
+			toPubkey: to_pubkey,
+			lamports: PROCESSING_FEE * LAMPORTS_PER_SOL,
+		});
+
+		const SOLtransfer = SystemProgram.transfer({
 			fromPubkey: payer,
 			toPubkey: to_pubkey,
 			lamports: amountNum * LAMPORTS_PER_SOL,
 		});
 
-		const initializeNoteMemo = new TransactionInstruction({
+		const noteMemo = new TransactionInstruction({
 			programId: new PublicKey(MEMO_PROGRAM_ID),
 			data: Buffer.from(note, "utf-8"),
 			keys: [],
@@ -110,7 +122,7 @@ export async function POST(
 		const message = new TransactionMessage({
 			payerKey: payer,
 			recentBlockhash: blockhash,
-			instructions: [initializeSOLtransfer, initializeNoteMemo],
+			instructions: [processingPayment, SOLtransfer, noteMemo],
 		}).compileToV0Message();
 
 		const tx = new VersionedTransaction(message);
