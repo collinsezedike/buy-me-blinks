@@ -36,7 +36,7 @@ export const POST = async (
 		const signature: string = body.signature;
 		if (!signature.trim()) throw new Error("invalid signature provided");
 
-		const connection = new Connection(CLUSTER_URL);
+		const connection = new Connection(CLUSTER_URL, { confirmTransactionInitialTimeout: 120000 });
 
 		try {
 			let status = await connection.getSignatureStatus(signature);
