@@ -6,7 +6,7 @@ export const GET = async (req: NextRequest) => {
 	const prefix = "https://dial.to/?action=solana-action:";
 	const { origin } = new URL(req.url);
 	const actionURL = new URL(
-		`${prefix}${origin}${URL_PATH}/mint&cluster=mainnet`
+		`${prefix}${origin}${URL_PATH}/mint&cluster=devnet`
 	);
 	return NextResponse.redirect(actionURL);
 };

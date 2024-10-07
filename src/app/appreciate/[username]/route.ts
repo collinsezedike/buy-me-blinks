@@ -10,7 +10,7 @@ export const GET = async (
 	const { origin } = new URL(req.url);
 	const { username } = context.params;
 	const actionURL = new URL(
-		`${prefix}${origin}${URL_PATH}/appreciate/${username}&cluster=mainnet`
+		`${prefix}${origin}${URL_PATH}/appreciate/${username}&cluster=devnet`
 	);
 	return NextResponse.redirect(actionURL);
 };
